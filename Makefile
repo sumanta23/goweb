@@ -21,6 +21,7 @@ GOCOVER=$(GO) tool cover
 GO_BUILD_ENV := CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=amd64
 BUILD_DIR=bin
 DOCKER=docker
+DOCKERCOMPOSE=docker-compose
 OUTPUT=$(BUILD_DIR)/app
 COVERAGE=$(BUILD_DIR)/coverage.out
 
@@ -57,4 +58,6 @@ build: clean dir
 	$(GO_BUILD_ENV) $(GO) build -o $(OUTPUT) .
 
 docker:
-	$(DOCKER) build  -t goapp -f .docker/Dockerfile . 
+	$(DOCKER) build  -t goapp -f .docker/Dockerfile .
+dc:
+	$(DOCKERCOMPOSE) -f .docker/docker-compose.yml up

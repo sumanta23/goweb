@@ -1,0 +1,10 @@
+http:
+  routers:
+    otherrouter:
+      rule: Host(`api.example.com`)
+      service: apiservice
+  services:
+    apiservice:
+      loadBalancer:
+        servers:
+          - url: http://whoami2:8080/

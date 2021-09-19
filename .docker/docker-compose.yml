@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+
+  traefik:
+    image: "traefik:v2.5"
+    networks:
+      - gateway
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+    ports:
+      - "1080:80"
+      - "10443:443"
+      - "18080:8080"
+    volumes:
+      - "../.etctraefik:/etc/traefik/"
+    links:
+    - "whoami1"
+    - "whoami2"
+
+  whoami1:
+    image: "goapp:latest"
+    networks:
+      - gateway
+    container_name: "whoami1"
+  whoami2:
+    image: "goapp:latest"
+    networks:
+      - gateway
+    container_name: "whoami2"
+
+networks:
+  gateway: {}
