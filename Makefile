@@ -28,6 +28,8 @@ all: test vet fmt lint build
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+gc:
 	rm -rf coverage
 	rm -rf tags
 
