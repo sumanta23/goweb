@@ -13,8 +13,8 @@ func main() {
 
 	router.Use(stats.RequestStats())
 	router.Use(gin.Logger())
-	router.LoadHTMLGlob("src/templates/*.tmpl.html")
-	router.Static("/static", "src/static")
+	router.LoadHTMLGlob("src/static/templates/*.tmpl.html")
+	router.Static("/static", "src/static/")
 
 	router.GET("/stats", func(c *gin.Context) {
 		c.JSON(http.StatusOK, stats.Report())
