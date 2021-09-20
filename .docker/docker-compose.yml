@@ -16,16 +16,27 @@ services:
     volumes:
       - "../.etctraefik:/etc/traefik/"
     links:
+    - "redis"
     - "whoami1"
     - "whoami2"
 
+  redis:
+    image: redis:6-alpine
+    networks:
+      - gateway
+    container_name: "redis"
+
   whoami1:
     image: "goapp:latest"
+    environment: 
+      - REDIS=redis
     networks:
       - gateway
     container_name: "whoami1"
   whoami2:
     image: "goapp:latest"
+    environment: 
+      - REDIS=redis
     networks:
       - gateway
     container_name: "whoami2"

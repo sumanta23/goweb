@@ -13,6 +13,7 @@ func main() {
 
 	router.Use(stats.RequestStats())
 	router.Use(gin.Logger())
+
 	router.LoadHTMLGlob("src/static/templates/*.tmpl.html")
 	router.Static("/static", "src/static/")
 
@@ -20,11 +21,11 @@ func main() {
 		c.JSON(http.StatusOK, stats.Report())
 	})
 
-	router.GET("/app", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 
-	router.GET("/", h.GetCounter)
-	router.POST("/", h.SetCounter)
+	router.GET("/count", h.GetCounter)
+	router.POST("/count", h.SetCounter)
 	router.Run(":8080")
 }

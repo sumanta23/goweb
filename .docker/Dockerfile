@@ -1,14 +1,15 @@
 FROM golang:1.17-buster as build
 RUN apt update
 RUN apt install -y git make bash
-RUN mkdir -p /src
-COPY . /src
-WORKDIR /src
+RUN mkdir -p /service
+COPY . /service
+WORKDIR /service
 RUN make clean build
 
 FROM alpine:latest
-WORKDIR /src
+WORKDIR /service
 RUN apk --no-cache add ca-certificates
-COPY --from=build /src/bin /src
-CMD ["/src/app"]
+COPY --from=build /service/bin/app /service/bin/app
+COPY --from=build /service/src/static /service/src/static
+CMD ["/service/bin/app"]
 
