@@ -53,6 +53,8 @@ fmt:
 lint:
 	$(GO) list ./... | grep -v /vendor/ | xargs -L1 golint -set_exit_status
 
+run:
+	$(GO) run main.go
 
 build: clean dir
 	$(GO_BUILD_ENV) $(GO) build -o $(OUTPUT) .

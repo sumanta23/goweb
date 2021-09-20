@@ -1,7 +1,7 @@
 package main
 
 import (
-	h "myapp/handler"
+	h "myapp/src/handler"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,9 +12,16 @@ func main() {
 	router := gin.Default()
 
 	router.Use(stats.RequestStats())
+	router.Use(gin.Logger())
+	router.LoadHTMLGlob("src/templates/*.tmpl.html")
+	router.Static("/static", "src/static")
 
 	router.GET("/stats", func(c *gin.Context) {
 		c.JSON(http.StatusOK, stats.Report())
+	})
+
+	router.GET("/app", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 
 	router.GET("/", h.GetCounter)
