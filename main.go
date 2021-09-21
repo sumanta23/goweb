@@ -1,8 +1,9 @@
 package main
 
 import (
-	h "myapp/src/handler"
 	"net/http"
+
+	routers "myapp/src/routers"
 
 	"github.com/gin-gonic/gin"
 	stats "github.com/semihalev/gin-stats"
@@ -14,18 +15,13 @@ func main() {
 	router.Use(stats.RequestStats())
 	router.Use(gin.Logger())
 
-	router.LoadHTMLGlob("src/static/templates/*.tmpl.html")
-	router.Static("/static", "src/static/")
-
 	router.GET("/stats", func(c *gin.Context) {
 		c.JSON(http.StatusOK, stats.Report())
 	})
 
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl.html", nil)
-	})
+	routers.AddStaticRoutes(router)
 
-	router.GET("/count", h.GetCounter)
-	router.POST("/count", h.SetCounter)
+	routers.AddRoutes(router)
+
 	router.Run(":8080")
 }
