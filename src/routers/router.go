@@ -2,14 +2,20 @@ package routers
 
 import (
 	h "myapp/src/handler"
+	wsmanager "myapp/src/wsmanager"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func AddRoutes(router *gin.Engine) {
+func AddRoutes(router *gin.Engine, hub *wsmanager.Hub) {
 	router.GET("/count", h.GetCounter)
-	router.POST("/count", h.SetCounter)
+	router.POST("/count", h.SetCounter(hub))
+}
+
+func AddWS(router *gin.Engine, hub *wsmanager.Hub) {
+	router.GET("/getwsurl", wsmanager.GetWSURL)
+	router.GET("/ws", wsmanager.Upgrade(hub))
 }
 
 func AddStaticRoutes(router *gin.Engine) {

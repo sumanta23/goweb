@@ -19,10 +19,11 @@ GO=go
 GOCOVER=$(GO) tool cover
 
 GO_BUILD_ENV := CGO_ENABLED=0 GOOS=$(TARGET) GOARCH=amd64
-BUILD_DIR=bin
+BUILD_DIR=build
+EXE_DIR=$(BUILD_DIR)/bin
 DOCKER=docker
 DOCKERCOMPOSE=docker-compose
-OUTPUT=$(BUILD_DIR)/app
+OUTPUT=$(EXE_DIR)/app
 COVERAGE=$(BUILD_DIR)/coverage.out
 
 all: test vet fmt lint build
@@ -35,7 +36,7 @@ gc:
 	rm -rf tags
 
 dir:
-	mkdir -p $(BUILD_DIR)
+	mkdir -p $(EXE_DIR)
 
 tags:
 	gotags -R * > tags

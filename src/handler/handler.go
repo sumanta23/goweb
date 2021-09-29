@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	"fmt"
+	"myapp/src/wsmanager"
 	"net/http"
 	"os"
 
@@ -42,11 +44,14 @@ func GetCounter(c *gin.Context) {
 }
 
 // SetCounter is Function get get counter via redis
-func SetCounter(c *gin.Context) {
-	err := rdb.Incr(ctx, "counter").Err()
-	if err != nil {
-		panic(err)
+func SetCounter(hub *wsmanager.Hub) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		val, err := rdb.Incr(ctx, "counter").Result()
+		if err != nil {
+			panic(err)
+		}
+		hub.Broadcast(fmt.Sprint(val))
+		mapD := map[string]bool{"success": true}
+		c.JSON(http.StatusOK, mapD)
 	}
-	mapD := map[string]bool{"success": true}
-	c.JSON(http.StatusOK, mapD)
 }

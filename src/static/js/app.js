@@ -13,3 +13,21 @@ async function getCounter(){
     const data = await response.json()
     document.getElementById("counter").innerHTML = data.count;
 }
+
+async function getwsurl(){
+    const response = await send({action: "/getwsurl", method: "GET"});
+    const data = await response.json()
+    return data.ws;
+}
+
+async function connectwithWS(){
+    const conn = new WebSocket("ws://" + document.location.host + (await getwsurl()));
+    conn.onclose = function (evt) {
+        var item = document.createElement("div");
+        item.innerHTML = "<b>Connection closed.</b>";
+        appendLog(item);
+    };
+    conn.onmessage = function (msg) {
+        document.getElementById("counter").innerHTML = msg.data;
+    };
+}

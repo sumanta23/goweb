@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	routers "myapp/src/routers"
+	wsmanager "myapp/src/wsmanager"
 
 	"github.com/gin-gonic/gin"
 	stats "github.com/semihalev/gin-stats"
@@ -19,9 +20,14 @@ func main() {
 		c.JSON(http.StatusOK, stats.Report())
 	})
 
+	hub := wsmanager.NewHub()
+	go hub.Run()
+
 	routers.AddStaticRoutes(router)
 
-	routers.AddRoutes(router)
+	routers.AddRoutes(router, hub)
 
-	router.Run(":8080")
+	routers.AddWS(router, hub)
+
+	router.Run(":5000")
 }
