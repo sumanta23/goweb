@@ -33,10 +33,10 @@ func (h *Hub) Run() {
 	for {
 		select {
 		case client := <-h.register:
-			log.Println("registering conn: %v", client.cid)
+			log.Printf("registering conn: %v", client.cid)
 			h.clients[client] = true
 		case client := <-h.unregister:
-			log.Println("closing conn: %v", client.cid)
+			log.Printf("closing conn: %v", client.cid)
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)
 				close(client.send)

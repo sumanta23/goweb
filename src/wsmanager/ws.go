@@ -19,7 +19,7 @@ var upgrader = websocket.Upgrader{
 	EnableCompression: true,
 	CheckOrigin: func(r *http.Request) bool {
 		origin := r.Header.Get("Origin")
-		log.Println("origin: %v", origin)
+		log.Printf("origin: %v", origin)
 		return true
 	},
 }
@@ -27,10 +27,10 @@ var upgrader = websocket.Upgrader{
 func Upgrade(hub *Hub) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ip, _ := c.RemoteIP()
-		log.Println("upgrading conn: %v", ip)
+		log.Printf("upgrading conn: %v", ip)
 		conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 		if err != nil {
-			log.Println("Failed to set websocket upgrade: %v", err)
+			log.Printf("Failed to set websocket upgrade: %v", err)
 			return
 		}
 
