@@ -42,6 +42,7 @@ tags:
 	gotags -R * > tags
 
 test:
+	$(GO) clean -testcache
 	$(GO) test ./...
 
 vet:

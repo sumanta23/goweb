@@ -11,6 +11,7 @@ import (
 func AddRoutes(router *gin.Engine, hub *wsmanager.Hub) {
 	router.GET("/count", h.GetCounter)
 	router.POST("/count", h.SetCounter(hub))
+	router.DELETE("/count", h.ResetCounter(hub))
 }
 
 func AddWS(router *gin.Engine, hub *wsmanager.Hub) {

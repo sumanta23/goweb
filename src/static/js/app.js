@@ -14,6 +14,12 @@ async function getCounter(){
     document.getElementById("counter").innerHTML = data.count;
 }
 
+async function resetCounter(){
+    const response = await send({action: "/count", method: "DELETE"});
+    const data = await response.json()
+    return true;
+}
+
 async function getwsurl(){
     const response = await send({action: "/getwsurl", method: "GET"});
     const data = await response.json()
@@ -29,5 +35,9 @@ async function connectwithWS(){
     };
     conn.onmessage = function (msg) {
         document.getElementById("counter").innerHTML = msg.data;
+
+        let root = document.documentElement
+        let spinspeed = (msg.data % 10)+1;
+        root.style.setProperty('--spinspeed', spinspeed+ "s");
     };
 }
