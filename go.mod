@@ -12,6 +12,6 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/semihalev/gin-stats v0.0.0-20180505163755-30fdcbbd3533
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
