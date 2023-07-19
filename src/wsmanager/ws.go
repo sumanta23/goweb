@@ -26,7 +26,7 @@ var upgrader = websocket.Upgrader{
 
 func Upgrade(hub *Hub) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		ip, _ := c.RemoteIP()
+		ip := c.RemoteIP()
 		log.Printf("upgrading conn: %v", ip)
 		conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 		if err != nil {
