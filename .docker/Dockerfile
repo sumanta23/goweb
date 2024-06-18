@@ -1,9 +1,10 @@
-FROM golang:1.17-buster as build
+FROM golang:1.20-buster as build
 RUN apt update
 RUN apt install -y git make bash
 RUN mkdir -p /service
 COPY . /service
 WORKDIR /service
+RUN go version
 RUN make clean build
 
 FROM alpine:latest
